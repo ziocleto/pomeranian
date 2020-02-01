@@ -1,0 +1,6 @@
+FROM pomeranian/builder:9.2.0 as builder
+
+RUN ./gitbuild.sh libzip rel-1-5-2 nih-at "-DBUILD_SHARED_LIBS=FALSE -DENABLE_COMMONCRYPTO=FALSE -DBUILD_TOOLS=FALSE -DBUILD_REGRESS=FALSE -DBUILD_EXAMPLES=FALSE -DBUILD_DOC=FALSE -DCMAKE_INSTALL_PREFIX=/build"
+
+FROM alpine
+COPY --from=builder /build /build
