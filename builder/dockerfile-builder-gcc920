@@ -1,6 +1,5 @@
 FROM gcc:9.2.0
 
-COPY gitbuild.sh .
+RUN apt-get update && apt-get install -y cmake libssl-dev libgl1-mesa-glx libicu-dev
 
-RUN wget https://github.com/Kitware/CMake/releases/download/v3.16.3/cmake-3.16.3.tar.gz
-RUN tar -zxvf cmake-3.16.3.tar.gz && cd cmake-3.16.3 && ./bootstrap && make && make install && make clean
+COPY gitbuild.sh .

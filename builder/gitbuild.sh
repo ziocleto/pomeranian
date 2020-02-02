@@ -1,3 +1,5 @@
+#!/bin/bash
+
 unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)     machine=Linux;;
@@ -14,11 +16,7 @@ GITUSER="$3"
 OPTIONS=$4
 PROJECTLIBS=$5
 
-BUILDSYSTEM=""
-
-MAINBUILDINGDIR="/3rdpartylibs/"
 # if [ ${machine} == "MinGw" ]; then
-# 	MAINBUILDINGDIR="c:/3rdpartylibs/"	
 # 	BUILDSYSTEMIMPL="MinGW Makefiles"
 # 	BUILDSYSTEM="-G""$BUILDSYSTEMIMPL"
 # 	OPTIONS="$OPTIONS"" -DCMAKE_INSTALL_PREFIX="c:/usr/local" -DCMAKE_SH="CMAKE_SH-NOTFOUND""
@@ -27,17 +25,10 @@ MAINBUILDINGDIR="/3rdpartylibs/"
 # 	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:c:/usr/local/lib
 # fi
 
-mkdir $MAINBUILDINGDIR
-cd $MAINBUILDINGDIR
-rm -rf $LIBNAME_NAME
 mkdir $LIBNAME_NAME
-cd $LIBNAME_NAME/
-wget https://github.com/$GITUSER/$LIBNAME_NAME/archive/$LIBNAME_VERSION.tar.gz
-tar -xvzf $LIBNAME_VERSION.tar.gz 
-LIB_INTERNALBUILD_DIR=$LIBNAME_NAME-build
-mkdir LIB_INTERNALBUILD_DIR
-cd LIB_INTERNALBUILD_DIR
-
-cmake $OPTIONS " " -DCMAKE_BUILD_TYPE=Release ../$LIBNAME_NAME-${LIBNAME_VERSION}/
+cd $LIBNAME_NAME
+git clone --recursive --branch=$LIBNAME_VERSION https://github.com/$GITUSER/$LIBNAME_NAME.git
+cmake $OPTIONS -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/build $LIBNAME_NAME -DBUILD_SHARED_LIBS=OFF
 make -j8
 make install
+make clean
