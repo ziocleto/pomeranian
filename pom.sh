@@ -61,5 +61,5 @@ $DEPS
 RUN ./gitbuild.sh $1 $2 $3 \"$4\"
 FROM alpine
 COPY --from=builder /build /build" | sudo tee ./dockerfile-$1
-build_and_run $1 $2 $3
+build_and_run $1 $2$3
 

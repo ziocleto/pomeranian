@@ -1,4 +1,0 @@
-FROM pomeranian/builder:9.2.0 as builder
-RUN ./gitbuild.sh restbed 4.7.0 ziocleto "-DCMAKE_INSTALL_LIBDIR=lib"
-FROM alpine
-COPY --from=builder /build /build
