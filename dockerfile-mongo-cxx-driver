@@ -1,8 +1,0 @@
-FROM pomeranian/mongo-c-driver as dep
-FROM sixthview/boost-package as boost
-FROM pomeranian/builder:9.2.0 as builder
-COPY --from=dep /build /usr/local
-COPY --from=boost /build/boost/. /usr/local
-RUN ./gitbuild.sh mongo-cxx-driver r3.4.0 mongodb "-DBSONCXX_POLY_USE_BOOST=1 -DBUILD_SHARED_LIBS=OFF"
-FROM alpine
-COPY --from=builder /build /build

@@ -1,4 +1,0 @@
-FROM pomeranian/builder:9.2.0 as builder
-RUN ./gitbuild.sh mongo-c-driver 1.15.3 mongodb
-FROM alpine
-COPY --from=builder /build /build
