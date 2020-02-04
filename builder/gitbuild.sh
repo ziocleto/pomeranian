@@ -28,7 +28,11 @@ PROJECTLIBS=$5
 mkdir $LIBNAME_NAME
 cd $LIBNAME_NAME
 git clone --recursive --branch=$LIBNAME_VERSION https://github.com/$GITUSER/$LIBNAME_NAME.git
-cmake $OPTIONS -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/build $LIBNAME_NAME -DBUILD_SHARED_LIBS=OFF
+mkdir builder
+cd builder
+echo "Using OPTIONS: " 
+echo $OPTIONS
+cmake $OPTIONS -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/build $LIBNAME_NAME -DBUILD_SHARED_LIBS=OFF ../$LIBNAME_NAME
 make -j8
 make install
 make clean

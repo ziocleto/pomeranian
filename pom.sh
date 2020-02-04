@@ -56,10 +56,10 @@ then
 	COPY --from=pomeranian/boost 		  		/build 		 	/usr/local"
 fi
 
-echo "FROM pomeranian/builder:9.2.0 as builder
+echo -e "FROM pomeranian/builder:9.2.0 as builder
 $DEPS
-RUN ./gitbuild.sh $1 $2 $3 $4
+RUN ./gitbuild.sh $1 $2 $3 \"$4\"
 FROM alpine
 COPY --from=builder /build /build" | sudo tee ./dockerfile-$1
-build_and_run $1 $2$3
+build_and_run $1 $2 $3
 
