@@ -53,7 +53,7 @@ DEPS=""
 if [ "$1" == "mongo-cxx-driver" ]
 then
 	DEPS="COPY --from=pomeranian/mongo-c-driver 		/build 			/usr/local
-	COPY --from=pomeranian/boost 		  		/build 		 	/usr/local"
+		  COPY --from=pomeranian/boost 		  		    /build 		 	/usr/local"
 fi
 
 echo -e "FROM pomeranian/builder:9.2.0 as builder

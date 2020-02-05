@@ -1,6 +1,0 @@
-FROM pomeranian/builder:9.2.0 as builder
-
-RUN ./gitbuild.sh tinygltf v2.2.2 ziocleto "-DTINYGLTF_BUILD_EXAMPLES=FALSE"
-
-FROM alpine
-COPY --from=builder /build /build
