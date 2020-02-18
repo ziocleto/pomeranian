@@ -1,1 +1,0 @@
-mongo-cxx-driver r3.4.0 mongodb "-DBSONCXX_POLY_USE_BOOST=1 -DBUILD_SHARED_LIBS=OFF"
