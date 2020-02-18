@@ -56,6 +56,11 @@ then
 		  COPY --from=pomeranian/boost 		  		    /build 		 	/usr/local"
 fi
 
+if [ "$1" == "tesseract" ]
+then
+	DEPS="COPY --from=pomeranian/leptonica      		/build 			/usr/local"
+fi
+
 echo -e "FROM pomeranian/builder:9.2.0 as builder
 $DEPS
 RUN ./gitbuild.sh $1 $2 $3 \"$4\"
