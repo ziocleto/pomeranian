@@ -25,14 +25,11 @@ INSTALL_PREFIX=$5
 # 	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:c:/usr/local/lib
 # fi
 
-mkdir $LIBNAME_NAME
-cd $LIBNAME_NAME
 git clone --recursive --branch=$LIBNAME_VERSION https://github.com/$GITUSER/$LIBNAME_NAME.git
-mkdir builder
-cd builder
+cd $LIBNAME_NAME
 echo "Using OPTIONS: " 
 echo $OPTIONS
-cmake $OPTIONS -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX $LIBNAME_NAME -DBUILD_SHARED_LIBS=OFF ../$LIBNAME_NAME
-make -j8
+./config $OPTIONS 
+make -j8 
 sudo make install
 sudo make clean

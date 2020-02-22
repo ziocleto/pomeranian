@@ -19,6 +19,32 @@ then
     exit 
 fi
 
+# OpenSSL
+if [ "$1" == "openssl" ]
+then
+	if [ "$#" -ne 2 ]; then
+    	echo " "
+    	echo "Error: openssl builds requires to specify version number: "
+    	echo "Use the following syntax: "
+    	echo "  pom.sh openssl version"
+    	echo " "
+    	exit 1
+	fi
+	P1="$2"
+
+	echo "FROM pomeranian/builder:9.2.0 as builder
+WORKDIR /builder
+RUN git clone --recursive --branch=$P1 https://github.com/openssl/openssl.git
+RUN cd openssl && ./config no-shared --prefix=/build --openssldir=/build/openssl && make -j8 && make install
+
+FROM alpine
+COPY --from=builder /build/. /build/
+" | sudo tee ./dockerfile-$1
+
+	build_and_run $1 $2
+	exit
+fi
+
 # Boost
 if [ "$1" == "boost" ]
 then
@@ -63,7 +89,7 @@ fi
 
 echo -e "FROM pomeranian/builder:9.2.0 as builder
 $DEPS
-RUN ./gitbuild.sh $1 $2 $3 \"$4\"
+RUN ./gitbuild.sh $1 $2 $3 \"$4\" /build
 FROM alpine
 COPY --from=builder /build /build" | sudo tee ./dockerfile-$1
 build_and_run $1 $2$3
